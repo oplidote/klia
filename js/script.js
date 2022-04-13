@@ -1,48 +1,67 @@
 window.onload = function () {
-    //  aos 관련
+    //  aos 관련    
     AOS.init({
-        // once: true              
+        once : true,        
+        disable: function () {
+            var desktop = 1280;
+            return window.innerWidth < desktop;
+        }
     });
 
-    // 스크롤시 애니메이션    
+    // 스크롤시 애니메이션 
     $(".customer-box-cont").each(function (index, el) {
         new Waypoint({
             element: el,
             handler: function (direction) {
                 var element = $(this.element);
                 var delay = element.attr('data-delay');
-                setTimeout(function () {
-                    
-                    if (direction == "down") {
-                        element.addClass('slideUp');
-                        element.addClass('effect-op-active');
-                    } else {
-                        element.removeClass('slideUp');
-                        element.removeClass('effect-op-active');
-                    }
-                }, delay);
-                // this.destroy();
+                
+                // 1280 이상일때
+                if($(window).width() > 1280) {
+
+                    setTimeout(function () {
+                        if (direction == "down") {
+                            element.addClass('slideUp');
+                            element.addClass('effect-op-active');
+                        } else {
+                            element.removeClass('slideUp');
+                            element.removeClass('effect-op-active');
+                        }
+                    }, delay);
+                    // this.destroy();
+
+                }else{
+                    element.addClass('effect-op-active');
+                }
+
             },
             offset: '90%'
         });
     });
+
     $(".news-bottom").each(function (index, el) {
         new Waypoint({
             element: el,
             handler: function (direction) {
                 var element = $(this.element);
                 var delay = element.attr('data-delay');
-                setTimeout(function () {
+                // 1280 이상일때
+                if($(window).width() > 1280) {
+                    setTimeout(function () {
 
-                    if (direction == "down") {
-                        element.addClass('slideUp2');
-                        element.addClass('effect-op-active');
-                    } else {
-                        element.removeClass('slideUp2');
-                        element.removeClass('effect-op-active');
-                    }
-                }, delay);
-                //   this.destroy();
+                        if (direction == "down") {
+                            element.addClass('slideUp2');
+                            element.addClass('effect-op-active');
+                        } else {
+                            element.removeClass('slideUp2');
+                            element.removeClass('effect-op-active');
+                        }
+                    }, delay);
+                    //   this.destroy();
+                }else{
+                    element.addClass('effect-op-active');
+                }
+                
             },
             offset: '90%'
         });
@@ -54,20 +73,25 @@ window.onload = function () {
             handler: function (direction) {
                 var element = $(this.element);
                 var delay = element.attr('data-delay');
-                setTimeout(function () {
-
-                    if (direction == "down") {
-                        element.addClass('slideUp');
-                        element.addClass('effect-op-active');
-                    } else {
-                        element.removeClass('slideUp');
-                        element.removeClass('effect-op-active');
-                    }
-                }, delay);
-                //   this.destroy();
+                 // 1280 이상일때
+                 if($(window).width() > 1280) {
+                    setTimeout(function () {
+                        if (direction == "down") {
+                            element.addClass('slideUp');
+                            element.addClass('effect-op-active');
+                        } else {
+                            element.removeClass('slideUp');
+                            element.removeClass('effect-op-active');
+                        }    
+                    }, delay);    
+                    //   this.destroy();
+                 }else{
+                    element.addClass('effect-op-active');
+                 }
             },
             offset: '90%'
         });
+
     });
 
 
@@ -87,7 +111,16 @@ window.onload = function () {
     $.each(submenu_box, function (index, item) {
         let temp = $(this).outerHeight();
         temp = Math.ceil(temp);
-        submenu_height.push(temp);
+        submenu_height[index] = temp;
+    });
+
+    // 리사이징 할때 마다 계산해라
+    $(window).resize(function(){ 
+        $.each(submenu_box, function (index, item) {
+            let temp = $(this).outerHeight();
+            temp = Math.ceil(temp);
+            submenu_height[index] = temp;
+        });
     });
 
     $.each(gnb_li, function (index, item) {
@@ -141,20 +174,7 @@ window.onload = function () {
         menu_timer = setTimeout(menuUp, menu_timer_delay);
     });
 
-    // 탭 공지사항
-    let news_menu = $('.news-menu a');
-    let news_list = $('.news-list');
-    $.each(news_menu, function (index, item) {
-        $(this).click(function (event) {
-            // a href 막기
-            event.preventDefault();
-            news_menu.removeClass('news-menu-active')
-            news_menu.eq(index).addClass('news-menu-active');
-            news_list.removeClass('news-list-active');
-            news_list.eq(index).addClass('news-list-active');
 
-        });
-    });
 
     // 공지사항 슬라이드
     new Swiper('.sw-vs-notice', {
@@ -224,7 +244,7 @@ window.onload = function () {
     // 배너슬라이드
     new Swiper('.sw-banner', {
         loop: true,
-        slidesPerView: 7,
+        slidesPerView: 3,
         autoplay: {
             delay: 1000,
             disableOnInteraction: false,
@@ -233,12 +253,39 @@ window.onload = function () {
         navigation: {
             nextEl: '.sw-banner-next',
             prevEl: '.sw-banner-prev'
+        },
+        breakpoints: {
+            760: {
+                slidesPerView: 4,
+            },
+            900: {
+                slidesPerView: 5,
+            },
+            1200: {
+                slidesPerView: 7,
+            },
         }
     });
 
 };
 
 $(document).ready(function () {
+
+    // 탭 공지사항
+    let news_menu = $('.news-menu a');
+    let news_list = $('.news-list');
+    $.each(news_menu, function (index, item) {
+        $(this).click(function (event) {
+            // a href 막기
+            event.preventDefault();
+            news_menu.removeClass('news-menu-active')
+            news_menu.eq(index).addClass('news-menu-active');
+            news_list.removeClass('news-list-active');
+            news_list.eq(index).addClass('news-list-active');
+
+        });
+    });
+
 
     // 장면을 저장합니다.
     let section = $('.main > section');
@@ -260,6 +307,72 @@ $(document).ready(function () {
     footer_pos = parseInt(footer_pos);
     section_pos.push(footer_pos);
 
+    // 화면이 리사이징 될때 마다 
+    // section_pos 배열을 업데이트 한다.
+
+    // 마우스 휠을 화면 이동에 사용할지 말지를 결정해 주는 변수
+    // 1 이면 wheel 이 적용이 되고
+    // 0 이면 wheel 이 적용이 안된다.
+    let wheel_active = 1;
+    // 윈도우 화면 너비를 받아온다.
+    let window_width = $(window).width();
+
+    // 만약에 윈도우 화면 너비가 1280픽셀 같거나 크면
+    // 휠 모션을 활성화 하겠다.
+    if (window_width >= 1280) {
+        wheel_active = 1;
+    } else {
+        wheel_active = 0;
+    }
+
+    $(window).resize(function () {
+
+        window_width = $(window).width();
+
+        if (window_width >= 1280) {
+            wheel_active = 1;
+
+            // 보도자료 자동 클릭
+            // 1280 에서
+            // 보여서는 안되는 공지사항이
+            // news-menu-active 를 가지고 있는지 판단
+            let temp = news_menu.eq(0).hasClass('news-menu-active');
+
+            if (temp == true) {
+                news_menu.eq(1).trigger('click');
+            }
+
+
+        } else {
+            wheel_active = 0;
+        }
+
+        // 1280 이상이면 휠 모션을 하지 않는다.
+        // 위 사항은 맞습니다.
+        // 이동하는 모션의 스크롤 위치를 계산해야합니다.
+        $.each(section, function (index, item) {
+            let temp = $(this).offset().top;
+            temp = parseInt(temp);
+            section_pos[index] = (temp);
+        });
+
+        footer_pos = $('.footer').offset().top;
+        footer_pos = parseInt(footer_pos);
+        section_pos[section_total - 1] = (footer_pos);
+        // section_index 가 변할 필요가 없다.
+        // 휠을 돌린 것은 아니니까
+        // 위치만 잡아준다.
+
+        // 1280 이상일 때는 위치를 잡아줘야 한다.
+        // 화면의 너비를 변경시킬때 마우스 휠을 적용
+        // 상태라면 위치를 계속 잡아줘야 한다.
+        if(wheel_active == 1) {
+            let temp = section_pos[section_index];
+            $('html').scrollTop(temp);
+        }        
+    });
+
+
     // 현재 보여지는 페이지 번호
     let section_index = 0;
 
@@ -273,32 +386,19 @@ $(document).ready(function () {
     let section_speed = 500;
 
     // 윈도우 스크롤 처리
-    $(window).scroll(function () {
-        console.log(section_pos[1]);
-        console.log($('.news-bottom').offset().top);
-    });
-    // 리사이즈
-    // 화면이 리사이징 될때 마다 
-    // section_pos 배열을 업데이트 한다.
-    $(window).resize(function(){
-        $.each(section, function(index, item){
-            let temp = $(this).offset().top;
-            temp = parseInt(temp);
-            section_pos[index] = temp;
-        });
-        console.log(section_pos);
-        footer_pos = $('.footer').offset().top;
-        footer_pos = parseInt(footer_pos);
-        section_pos[section_total - 1] = footer_pos;
-        // section_pos 정의를 위한
-        sectionFn();
-    });
+    $(window).scroll(function () {});
     // 마우스 휠 처리
     $(window).bind('mousewheel DOMMouseScroll', function (event) {
 
         let distance = event.originalEvent.wheelDelta;
         if (distance == null) {
             distance = event.originalEvent.detail * -1;
+        }
+
+        // 화면 너비에 따라서 휠 모션 적용 여부 결정
+        if (wheel_active == 0) {
+            // 화면이 1280 작으면 휠 모션을 하지 않겠다.
+            return;
         }
 
         // 연속으로 휠이 들어온 경우 처리
@@ -364,7 +464,6 @@ $(document).ready(function () {
 
     // 연속 버튼 막기
     let bt_bool = false;
-
 
     gotop.click(function (event) {
         event.preventDefault();
