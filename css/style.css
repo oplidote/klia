@@ -35,7 +35,208 @@ html {
     overflow-x: hidden;
     overflow-y: hidden;
 }
+/* modal */
+/* 모달창 */
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+}
 
+.modal-wrap {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    max-width: 500px;
+    width: 100%;
+    height: 350px;
+    z-index: 999;
+    background-color: #fff;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 15px;
+    overflow: hidden;
+}
+
+.caution {
+    margin-top: 20px;
+    width: 80px;
+}
+
+.modal-wrap b {
+    position: relative;
+    display: block;
+    font-size: 17px;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.modal-wrap>strong {
+    color: #333;
+    font-weight: bold;
+}
+.modal-date {
+    position: relative;
+    display: block;
+    margin-top: 5%;
+    font-size: 12px;
+}
+.modal-close {
+    position: absolute;
+    display: block;
+    top: 25px;
+    right: 25px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: transparent;
+    transform: rotate(45deg);
+    border: none;
+    cursor: pointer;
+    transition: .3s;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity .3s .5s;
+}
+
+.comment-on .modal-close {
+    transition: opacity .3s;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.modal-close:hover {
+    transform: rotate(225deg);
+}
+
+.modal-close::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #999;
+}
+
+.modal-close::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+    width: 2px;
+    height: 100%;
+    background-color: #999;
+}
+
+.modal-comment {
+    position: absolute;
+    display: block;
+
+    width: 100%;
+    height: 40px;
+    bottom: 0;
+    background-color: #333;
+    transition: .5s .3s;
+}
+
+.comment-on .modal-comment {
+    height: 100%;
+    transition: .5s;
+}
+
+.comment-bt {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    line-height: 40px;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    color: #fff;
+    font-size: 17px;
+    z-index: 1;
+}
+
+.comment-box {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: left;
+    opacity: 0;
+    transition: opacity .3s;
+    color: #fff;
+}
+.comment-box span{
+    position: relative;
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 5px;
+    padding-left: 10%;
+}
+.comment-box span::before{
+    content: '';
+    position: absolute;
+    top: 7px;
+    left: calc(10% - 10px);
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: #fff;
+    display: block;
+}
+.comment-box strong {
+    position: relative;
+    display: block;
+    padding-left: 7%;
+    font-size: 17px;
+    margin-bottom: 2%;
+    font-weight: bold;
+
+}
+
+.comment-on .comment-box{
+    opacity: 1;
+    transition: opacity .3s .5s;
+}
+.modal-date {
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+}
+@media screen and (max-width: 420px) {
+    .caution {
+        width: 60px;
+    }
+
+    .modal-wrap {
+        height: 300px;
+        font-size: 13px;
+    }
+    .comment-box span {
+        font-size: 13px;
+    }
+
+    .modal-wrap b {
+        font-size: 15px;
+    }
+}
 /* 세로 스크롤바 자동 생성 하기 : 스크립트 휠 제거 */
 @media all and (max-width: 1280px) {
     html {
@@ -528,6 +729,13 @@ body {
     .gnb {
         width: 100%;
     }
+    .control {
+        top: auto;
+        bottom: 50px;
+    }
+    .control-nav {
+        top: auto;
+    }
     .control-menu {
         display: none;
     }
@@ -784,7 +992,6 @@ body {
     position: relative;
     display: block;
     width: 100%;
-    height: 100%;
 
     padding-top: 250px;
 }
@@ -1166,7 +1373,8 @@ body {
     display: block;
     float: left;
     line-height: 50px;
-    padding: 0 38px;
+    width: 33.33%;
+    max-width: 140px;
     font-family: 'NanumSquare', sans-serif;
     font-size: 18px;
     font-weight: 700;
@@ -1864,7 +2072,7 @@ body {
 }
 
 .customer-bottom .pd-all-25 {
-    padding-top: 30px !important;
+    padding: 30px 0 !important;
 }
 
 
@@ -2321,56 +2529,20 @@ body {
     display: block;
     width: 14.12%;   
     text-align: center;
-    padding-top: 195px;
 }
 
-.partner-list a::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%) scale(1.0);
-    top: 0;
-    display: block;
-    width: 178px;
-    height: 178px;
-    border: 6px solid #fff;
+
+.partner-link img{
+    position: relative;
+    width: 100%;
+    max-width: 178px;
     border-radius: 50%;
-    box-sizing: border-box;
-    transition: transform 0.4s;
+    border: 2px solid #fff;
+    transition: .3s;
 }
 
-.partner-link:nth-child(1)::before {
-    background: url('../images/icon_mcompany01.png') no-repeat center;
-    background-size: cover;
-}
-
-.partner-link:nth-child(2)::before {
-    background: url('../images/icon_mcompany02.png') no-repeat center;
-    background-size: cover;
-}
-
-.partner-link:nth-child(3)::before {
-    background: url('../images/icon_mcompany04.png') no-repeat center;
-    background-size: cover;
-}
-
-.partner-link:nth-child(4)::before {
-    background: url('../images/icon_mcompany05.png') no-repeat center;
-    background-size: cover;
-}
-
-.partner-link:nth-child(5)::before {
-    background: url('../images/icon_mcompany07.png') no-repeat center;
-    background-size: cover;
-}
-
-.partner-link:nth-child(6)::before {
-    background: url('../images/icon_mcompany06.png') no-repeat center;
-    background-size: cover;
-}
-
-.partner-link:hover::before {
-    transform: translateX(-50%) scale(1.2);
+.partner-link:hover img {
+    transform: scale(1.2);
 }
 
 .partner-list a h3 {
@@ -2611,5 +2783,26 @@ body {
     }
     .web {
         width: 30px;
+    }
+}
+@media all and (max-width: 480px) {
+    .partner-list a h3 {
+        font-size: 13px;
+    }
+    .visual-desc-off,
+    .partner-list a p {
+        display: none;
+    }
+    .visual-icon {
+        top: 15px;
+    }
+    .visual-box-cont {
+        height: auto;
+    }
+    .visual-box-cont>a {
+        padding: 95px 0 10px 0;
+    }
+    .visual-cate-link:hover .visual-desc-on {
+        display: none !important;
     }
 }

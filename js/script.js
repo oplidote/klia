@@ -1,7 +1,25 @@
 window.onload = function () {
+    // 모달창
+    let $modal = $('.modal');
+    let $modal_close = $('.modal-close');
+    let $comment_bt = $('.comment-bt');
+    $modal_close.click(function () {
+        $('html').css('overflow-y', 'auto');
+        $modal.fadeOut(300);
+    });
+    $comment_bt.click(function () {
+
+        $(this).hide();
+        $(this).text('닫기').show(300);
+        if ($modal.hasClass('comment-on')) {
+            $(this).hide();
+            $(this).text('리뷰 및 개선사항').show(300);
+        }
+        $modal.toggleClass('comment-on');
+    });
     //  aos 관련    
     AOS.init({
-        once : true,        
+        once: true,
         disable: function () {
             var desktop = 1280;
             return window.innerWidth < desktop;
@@ -15,9 +33,9 @@ window.onload = function () {
             handler: function (direction) {
                 var element = $(this.element);
                 var delay = element.attr('data-delay');
-                
+
                 // 1280 이상일때
-                if($(window).width() > 1280) {
+                if ($(window).width() > 1280) {
 
                     setTimeout(function () {
                         if (direction == "down") {
@@ -30,7 +48,7 @@ window.onload = function () {
                     }, delay);
                     // this.destroy();
 
-                }else{
+                } else {
                     element.addClass('effect-op-active');
                 }
 
@@ -46,7 +64,7 @@ window.onload = function () {
                 var element = $(this.element);
                 var delay = element.attr('data-delay');
                 // 1280 이상일때
-                if($(window).width() > 1280) {
+                if ($(window).width() > 1280) {
                     setTimeout(function () {
 
                         if (direction == "down") {
@@ -58,10 +76,10 @@ window.onload = function () {
                         }
                     }, delay);
                     //   this.destroy();
-                }else{
+                } else {
                     element.addClass('effect-op-active');
                 }
-                
+
             },
             offset: '90%'
         });
@@ -73,8 +91,8 @@ window.onload = function () {
             handler: function (direction) {
                 var element = $(this.element);
                 var delay = element.attr('data-delay');
-                 // 1280 이상일때
-                 if($(window).width() > 1280) {
+                // 1280 이상일때
+                if ($(window).width() > 1280) {
                     setTimeout(function () {
                         if (direction == "down") {
                             element.addClass('slideUp');
@@ -82,12 +100,12 @@ window.onload = function () {
                         } else {
                             element.removeClass('slideUp');
                             element.removeClass('effect-op-active');
-                        }    
-                    }, delay);    
+                        }
+                    }, delay);
                     //   this.destroy();
-                 }else{
+                } else {
                     element.addClass('effect-op-active');
-                 }
+                }
             },
             offset: '90%'
         });
@@ -115,7 +133,7 @@ window.onload = function () {
     });
 
     // 리사이징 할때 마다 계산해라
-    $(window).resize(function(){ 
+    $(window).resize(function () {
         $.each(submenu_box, function (index, item) {
             let temp = $(this).outerHeight();
             temp = Math.ceil(temp);
@@ -366,10 +384,10 @@ $(document).ready(function () {
         // 1280 이상일 때는 위치를 잡아줘야 한다.
         // 화면의 너비를 변경시킬때 마우스 휠을 적용
         // 상태라면 위치를 계속 잡아줘야 한다.
-        if(wheel_active == 1) {
+        if (wheel_active == 1) {
             let temp = section_pos[section_index];
             $('html').scrollTop(temp);
-        }        
+        }
     });
 
 
